@@ -14,3 +14,11 @@ Once the above pre-conditions are true, follow these steps:
 2. Install Node.js using good old apt: `sudo apt install -y nodejs`
 3. Once the above is done, you can confirm things are installed by running `node -v`
     * If everything worked you should see some output like this: `v10.11.0`
+
+## Developing
+
+### Setting up a test DB
+This project uses [sqlite](https://www.sqlite.org/) as its datastore. Since it is an self-contained, embedded databases... there is no additional things to set up.  
+The DB file will be automatically created the first time you run the application (the defualt location is `db/pihole-cluster.db`)
+
+If you want to visualize the DB schema you can use [MySQL Workbench](https://mysqlworkbench.org) to open the model found at `db/model.mwb` (but this visual could fall out of date)

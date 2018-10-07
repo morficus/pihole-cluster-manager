@@ -1,8 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
+const db = require('./db')
 
-app.use(async ctx => {
-    ctx.body = 'Hello World';
-});
+db.init()
 
 app.listen(3000);
