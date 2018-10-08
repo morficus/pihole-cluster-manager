@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 *.db
 *.bak
+api/controllers/keys.json
 
 # Runtime data
 pids

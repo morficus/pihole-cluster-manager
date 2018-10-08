@@ -3,6 +3,7 @@ const router = require('koa-router')({
 })
 const bodyparser = require('koa-bodyparser')
 const NodeController = require('./controllers/nodes')
+const ClusterController = require('./controllers/cluster')
 
 module.exports = function(app) {
 
@@ -68,6 +69,16 @@ module.exports = function(app) {
                 ctx.status = 500
             }
         })
+
+    router.get('/admin/publickey', async (ctx) => {
+        try {
+            ctx.body = await ClusterController.getPublicKey()
+            ctx.status = 200
+        } catch (error) {
+            ctx.status = 500
+            ctx.body = {error: 'Can not find public key. Something must be terribly wrong.'}
+        }
+    })
 
     // Automatically parse JSON data in POST calls.
     app.use(bodyparser())
