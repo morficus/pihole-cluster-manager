@@ -15,6 +15,12 @@ Once the above pre-conditions are true, follow these steps:
 3. Once the above is done, you can confirm things are installed by running `node -v`
     * If everything worked you should see some output like this: `v10.11.0`
 
+## Adding nodes to the cluster
+1- Add the node info to the cluster manager (`POST /api/nodes`)
+2- Get the public key info for each node (`GET /api/nodes` to get the node ID, then the `GET /api/nodes/:id/publickey` to get the key)
+3- Copy that key to each node and place it in the `.ssh/authorized_keys` file
+4- Test communication with each node (`GET /api/nodes/test-communication`)
+
 ## Developing
 
 ### Setting up a test DB

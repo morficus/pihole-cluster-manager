@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 const db = require('./db')
-const ClusterManager = require('./api/controllers/cluster')
+const KeysController = require('./api/controllers/keys')
 db.init()
 require('./api')(app)
 
@@ -14,7 +14,7 @@ app.use(async (ctx, next) => {
 })
 
 // Try to generate new keys in case this is a first-time run
-ClusterManager.generateKeys()
+KeysController.generateKeys()
     .then(results => {
         if (results.firstTimeKeys) {
             console.log('This is the first time you run Pihole Cluster Manager, SSH keys have been generated')

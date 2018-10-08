@@ -43,11 +43,6 @@ const PiholeNodes = sequelize.define('PiholeNodes', {
         allowNull: false
     },
 
-    sshKey: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
-
     username: {
         type: Sequelize.TEXT,
         defaultValue: 'pi'

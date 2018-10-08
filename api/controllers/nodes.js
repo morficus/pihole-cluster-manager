@@ -1,5 +1,7 @@
 const db = require('../../db')
 const Nodes = db.models.PiholeNodes
+const KeysController = require('./keys')
+const forge = require('node-forge')
 
 const NodeController = {
 
@@ -15,12 +17,11 @@ const NodeController = {
      */
     async add(newNodeInfo) {
         const hasIpAddress = newNodeInfo.hasOwnProperty('ipAddress') && newNodeInfo['ipAddress'].length
-        const hasSshKey = newNodeInfo.hasOwnProperty('sshKey') && newNodeInfo['sshKey'].length
         const defaults = {
             userName: 'pi'
         }
 
-        if (!hasIpAddress || !hasSshKey) {
+        if (!hasIpAddress) {
             throw new Error('An ssh-key and IP address must be provided')
         }
 
@@ -36,7 +37,7 @@ const NodeController = {
      */
     async getAll() {
         const searchOptions = {
-            attributes: ['id', 'ipAddress', 'lastSeen', 'displayName'],
+            attributes: ['id', 'ipAddress', 'lastSeen', 'displayName', 'username'],
             order: ['ipAddress']
         }
         return Nodes.findAll(searchOptions)
@@ -44,7 +45,7 @@ const NodeController = {
 
     /**
      * Get a details about a single node
-     * @param {String} nodeId Unique identifier
+     * @param {UUID} nodeId Unique identifier
      * @returns {Promise<Model>}
      */
     async getById(nodeId) {
@@ -70,7 +71,7 @@ const NodeController = {
 
     /**
      * Delete a node info
-     * @param {String} nodeId Unique identifier
+     * @param {UUID} nodeId Unique identifier
      * @returns {Promise<void>}
      */
     async delete(nodeId) {
@@ -79,6 +80,21 @@ const NodeController = {
                 id: nodeId
             }
         })
+    },
+
+    /**
+     * Generates a public key with the specific username and IP address for a particular node.
+     * The public key is generated based off the cluster system's keys.
+     * @param {UUID} nodeId Unique identifier
+     * @returns {Promise<the>}
+     */
+    async generatePublicKey(nodeId) {
+        KeysController.getPublicKey()
+        const promiseArray = await Promise.all([this.getById(nodeId), KeysController.getPublicKey()])
+        const node = promiseArray[0]
+        const key = promiseArray[1]
+        const publicKey = forge.pki.publicKeyFromPem(key);
+        return forge.ssh.publicKeyToOpenSSH(publicKey, `${node.username}@${node.ipAddress}`);
     }
 }
 
