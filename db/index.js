@@ -27,50 +27,44 @@ async function init() {
 // TODO: place each model in its own file
 const PiholeNodes = sequelize.define('PiholeNodes', {
     id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
-        default: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4
     },
 
-    ip_address: {
+    ipAddress: {
         type: Sequelize.TEXT,
         allowNull: false,
         unique: true
     },
 
-    api_key: {
+    apiKey: {
         type: Sequelize.TEXT,
         allowNull: false
     },
 
-    ssh_address: {
+    sshKey: {
         type: Sequelize.TEXT,
         allowNull: false
     },
 
     username: {
         type: Sequelize.TEXT,
-        allowNull: false,
-        default: 'pi'
+        defaultValue: 'pi'
     },
     
-    display_name: {
+    displayName: {
         type: Sequelize.TEXT,
         unique: true
     },
-
-    date_added: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
-    },
     
-    last_seen: {
+    lastSeen: {
         type: Sequelize.DATE
     },
     
-    is_master: {
+    isMaster: {
         type: Sequelize.BOOLEAN,
-        default: false
+        defaultValue: false
     }
 })
 
