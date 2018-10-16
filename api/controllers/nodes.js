@@ -2,6 +2,9 @@ const db = require('../../db')
 const Nodes = db.models.PiholeNodes
 const KeysController = require('./keys')
 const forge = require('node-forge')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
+
 
 const NodeController = {
 
@@ -53,6 +56,23 @@ const NodeController = {
             attributes: ['id', 'ipAddress', 'lastSeen', 'displayName', 'username', 'isMaster', 'createdAt', 'updatedAt']
         }
         return Nodes.findById(nodeId, options)
+    },
+
+    /**
+     * Get details for all nodes in the lis
+     * @param {Array<UUID>} nodeIds List of unique node IDs
+     * @returns {Promise<Array<Model>>}
+     */
+    async getByIds(nodeIds) {
+        const result = await Nodes.findAll({
+            where: {
+                id: {
+                    [Op.or]: nodeIds
+                }
+            }
+        })
+
+        return result.map(r => r.dataValues)
     },
 
     /**

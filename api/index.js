@@ -5,6 +5,7 @@ const bodyparser = require('koa-bodyparser')
 const NodeController = require('./controllers/nodes')
 const ClusterController = require('./controllers/cluster')
 const KeysController = require('./controllers/keys')
+const RpcController = require('./controllers/rpc')
 
 module.exports = function(app) {
 
@@ -74,6 +75,63 @@ module.exports = function(app) {
         } catch (error) {
             ctx.status = error.status
             ctx.body = error
+        }
+    })
+
+    router.get('/nodes/disable', async (ctx) => {
+        try {
+            let nodes = []
+            if (ctx.request.query.nodes) {
+                nodes = ctx.request.query.nodes.split(',')
+            }
+            ctx.body = await RpcController.disablePihole(nodes, ctx.request.query.time)
+        } catch (error) {
+            ctx.body = { error }
+            ctx.status = 500
+        }
+    })
+    router.get('/nodes/enable', async (ctx) => {
+        try {
+            let nodes = []
+            if (ctx.request.query.nodes) {
+                nodes = ctx.request.query.nodes.split(',')
+            }
+            ctx.body = await RpcController.enablePihole(nodes)
+        } catch (error) {
+            ctx.body = { error: error }
+            ctx.status = 500
+        }
+    })
+    router.get('/nodes/restart', async (ctx) => {
+        try {
+            let nodes = []
+            if (ctx.request.query.nodes) {
+                nodes = ctx.request.query.nodes.split(',')
+            }
+            ctx.body = await RpcController.restartDns(nodes)
+        } catch (error) {
+            ctx.body = { error: error }
+            ctx.status = 500
+        }
+    })
+    router.get('/nodes/device/restart', async (ctx) => {
+        try {
+            let nodes = []
+            if (ctx.request.query.nodes) {
+                nodes = ctx.request.query.nodes.split(',')
+            }
+            ctx.body = await RpcController.reboot(nodes)
+        } catch (error) {
+            ctx.body = { error: error }
+            ctx.status = 500
+        }
+    })
+    router.get('/nodes/update', async (ctx) => {
+        try {
+            ctx.body = await RpcController.updatePihole(ctx.request.query.nodes)
+        } catch (error) {
+            ctx.body = { error: error }
+            ctx.status = 500
         }
     })
 
