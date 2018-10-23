@@ -1,0 +1,576 @@
+{
+	"info": {
+		"_postman_id": "70b3f417-8509-4595-8ef5-3613435d1b23",
+		"name": "Pihole Cluster Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sync",
+			"item": [
+				{
+					"name": "Sync white list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/sync/whitelist",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"sync",
+								"whitelist"
+							]
+						},
+						"description": "Will sync all white list entries to all nodes.\nResponse and sync time depend on network latency as well as size of your list."
+					},
+					"response": []
+				},
+				{
+					"name": "Sync black list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/sync/blacklist",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"sync",
+								"blacklist"
+							]
+						},
+						"description": "Will sync all black list entries to all nodes.\nResponse and sync time depend on network latency as well as size of your list."
+					},
+					"response": []
+				},
+				{
+					"name": "Sync all lists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/sync",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync regex list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/sync/regexlist",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"sync",
+								"regexlist"
+							]
+						},
+						"description": "Will sync all regex list entries to all nodes.\nResponse and sync time depend on network latency as well as size of your list."
+					},
+					"response": []
+				},
+				{
+					"name": "Sync adlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/sync/adlist",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"sync",
+								"adlist"
+							]
+						},
+						"description": "Will sync all adlist entries to all nodes.\nResponse and sync time depend on network latency as well as size of your list."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "node CRUD",
+			"item": [
+				{
+					"name": "List all nodes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes"
+							]
+						},
+						"description": "Get a list of all registered nodes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add new node",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ipAddress\": \"192.168.1.xxx\",\n\t\"displayName\": \"Test Node\",\n\t\"username\": \"pi\",\n\t\"apiKey\": \"abc-123\",\n\t\"isMaster\": false\n}"
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes"
+							]
+						},
+						"description": "Add a new node to be managed by the cluster"
+					},
+					"response": []
+				},
+				{
+					"name": "Get node details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/:id",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Given a particular node ID (look at `/api/nodes`), get the full details for a single node"
+					},
+					"response": []
+				},
+				{
+					"name": "Update node details",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/:id",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Given a particular node ID (look at `/api/nodes`), update the details for a single node"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete node",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/:id",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Given a particular node ID (look at `/api/nodes`), delete the corresponding node"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "managment",
+			"item": [
+				{
+					"name": "Disable node",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/disable?time=10",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"disable"
+							],
+							"query": [
+								{
+									"key": "nodes",
+									"value": "",
+									"description": "List of node IDs to disable. If not given, then the operation applies to all nodes",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "10",
+									"description": "Time (in seconds) to disable the PiHole node. If not present, will be disabled indefinitely. "
+								}
+							]
+						},
+						"description": "Disables all or a specific node for a particular amount of time"
+					},
+					"response": []
+				},
+				{
+					"name": "Enable node",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/enable",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"enable"
+							],
+							"query": [
+								{
+									"key": "nodes",
+									"value": "",
+									"description": "List of node IDs to enable. If not given, then the operation applies to all nodes",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Enable a node that was previsouly disabled "
+					},
+					"response": []
+				},
+				{
+					"name": "Update PiHole",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/update?",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"update"
+							],
+							"query": [
+								{
+									"key": "nodes",
+									"value": null,
+									"description": "List of node IDs to update. If not given, then the operation applies to all nodes",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Restart DNS service on nodes"
+					},
+					"response": []
+				},
+				{
+					"name": "Restart rPI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/device/restart?",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"device",
+								"restart"
+							],
+							"query": [
+								{
+									"key": "nodes",
+									"value": "",
+									"description": "List of node IDs to restart their rPI. If not given, then the operation applies to all nodes",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Reboot the physical device that PiHole is running on"
+					},
+					"response": []
+				},
+				{
+					"name": "Restart DNS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{pihole-cluster-host}}/api/nodes/restart",
+							"host": [
+								"{{pihole-cluster-host}}"
+							],
+							"path": [
+								"api",
+								"nodes",
+								"restart"
+							],
+							"query": [
+								{
+									"key": "nodes",
+									"value": "",
+									"description": "List of node IDs to restart their rPI. If not given, then the operation applies to all nodes",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Restart DNS on specified nodes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get PiHolve version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{pihole-cluster-host}}/api/nodes/:id/version",
+					"host": [
+						"{{pihole-cluster-host}}"
+					],
+					"path": [
+						"api",
+						"nodes",
+						":id",
+						"version"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SSH publickey for a node",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{pihole-cluster-host}}/api/nodes/:id/publickey",
+					"host": [
+						"{{pihole-cluster-host}}"
+					],
+					"path": [
+						"api",
+						"nodes",
+						":id",
+						"publickey"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "Given a particular node ID (look at `/api/nodes`), get the system-generated SSH publickey that needs to be added to the corresponding PiHole"
+			},
+			"response": []
+		},
+		{
+			"name": "Get public key",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{pihole-cluster-host}}/api/admin/publickey",
+					"host": [
+						"{{pihole-cluster-host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"publickey"
+					]
+				},
+				"description": "Get the systems public key"
+			},
+			"response": []
+		}
+	]
+}

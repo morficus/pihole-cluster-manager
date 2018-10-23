@@ -135,6 +135,15 @@ module.exports = function(app) {
         }
     })
 
+    router.get('/nodes/:id/version', async (ctx) => {
+        try {
+            ctx.body = await NodeController.version(ctx.params.id)
+            ctx.status = 200
+        } catch(error) {
+            ctx.body = { error: error.message }
+            ctx.status = 500
+        }
+    })
     router.get('/nodes/:id', async (ctx) => {
         try {
             const nodeInfo = await NodeController.getById(ctx.params.id)

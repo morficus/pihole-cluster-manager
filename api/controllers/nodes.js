@@ -4,9 +4,33 @@ const KeysController = require('./keys')
 const forge = require('node-forge')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
-
+const util = require('util');
+const execFile = util.promisify(require('child_process').execFile);
 
 const NodeController = {
+
+    /**
+     * Get the PiHole version information for a particular node.
+     * This method is intended as a way to test that the cluster manager can communicate with a node
+     * @param {UUID} nodeId Unique identifier
+     * @returns {Promise<Object>} { "Pi-hole": "v4.0 (Latest: v4.0)",  "AdminLTE": "v4.0 (Latest: v4.0)", "FTL": "v4.0 (Latest: v4.0)"}
+     */
+    async version(nodeId) {
+        const node = await this.getById(nodeId)
+        const scriptPath = `${__dirname}/../../scripts/pi-test-access.sh`
+        const privKeyPath = KeysController.getPathToPrivateKey()
+
+        const {stdout, stderr} = await execFile(scriptPath, [node.username, node.ipAddress, privKeyPath])
+        const versionArray = stdout.trim().split('\n').map(s => s.trim())
+        const versions = {}
+
+        versionArray.forEach(versionString => {
+            const name = versionString.split(' version is ')[0]
+            versions[name]  = versionString.split(' version is ')[1]
+        })
+
+        return versions
+    },
 
     /**
      * Add a new PiHole node

@@ -4,7 +4,6 @@ const util = require('util');
 const execFile = util.promisify(require('child_process').execFile);
 
 const RPCController = {
-
     /**
      * Disable PiHole for a certain amount of time. If no time is provided, PiHole will be disabled until "enable" is called
      * @param {Array<UUID>} nodeIds List of node IDs
